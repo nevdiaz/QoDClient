@@ -15,6 +15,7 @@ import io.reactivex.schedulers.Schedulers;
 public class MainViewModel extends AndroidViewModel {
 
   private MutableLiveData<Quote> random;
+  private MutableLiveData<Quote> search;
   private CompositeDisposable pending = new CompositeDisposable();
 
   public MainViewModel(@NonNull Application application) {
@@ -33,5 +34,17 @@ public class MainViewModel extends AndroidViewModel {
     );
 
     return random;
+  }
+  public LiveData<Quote> getSearch(String string) {
+    if (search == null) {
+      search = new MutableLiveData<>();
+    }
+    pending.add(
+        QodService.getInstance().search(string)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe((quote) -> search.setValue(quote))
+    );
+    return search;
   }
 }

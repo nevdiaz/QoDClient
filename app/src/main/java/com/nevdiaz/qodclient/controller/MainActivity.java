@@ -3,6 +3,10 @@ package com.nevdiaz.qodclient.controller;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Toast;
 import androidx.appcompat.app.AlertDialog;
 import androidx.lifecycle.LiveData;
@@ -40,7 +44,8 @@ public class MainActivity extends AppCompatActivity {
       new AlertDialog.Builder(this)
           .setMessage(quote.getText() + quote.getCombinedSources())
           .setTitle("Random Quote") // TODO Extract to resource.
-          .setPositiveButton("Cool!", (dialogInterface, i) -> {})
+          .setPositiveButton("Cool!", (dialogInterface, i) -> {
+          })
           .create()
           .show();
     });
@@ -77,4 +82,16 @@ public class MainActivity extends AppCompatActivity {
 
     return super.onOptionsItemSelected(item);
   }
+
+//  @Override
+//  public View onCreateView(LayoutInflater inflater, ViewGroup container,
+//      Bundle savedInstanceState) {
+//    Button newMovieButton = view.findViewById(R.id.button);
+//    newMovieButton.setOnClickListener(new View.OnClickListener() {
+//      @Override
+//      public void onClick(View view) {
+//
+//      }
+//    });
+//  }
 }
