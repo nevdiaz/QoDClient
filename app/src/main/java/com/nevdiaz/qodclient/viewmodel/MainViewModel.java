@@ -11,6 +11,7 @@ import io.reactivex.Scheduler;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.schedulers.Schedulers;
+import java.util.LinkedList;
 
 public class MainViewModel extends AndroidViewModel {
 
@@ -35,16 +36,19 @@ public class MainViewModel extends AndroidViewModel {
 
     return random;
   }
-  public LiveData<Quote> getSearch(String string) {
+  public LiveData<Quote> searchQuote(String string) {
     if (search == null) {
       search = new MutableLiveData<>();
     }
-    pending.add(
-        QodService.getInstance().search(string)
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe((quote) -> search.setValue(quote))
-    );
+    if (search != null) {
+      pending.add(
+          QodService.getInstance().search(search)
+              .subscribeOn(Schedulers.io())
+              .observeOn(AndroidSchedulers.mainThread())
+              .subscribe((quotes) -> search.setValue(quotes)));
+    } else {
+      search.setValue(new LinkedList<>());
+    }
     return search;
   }
 }

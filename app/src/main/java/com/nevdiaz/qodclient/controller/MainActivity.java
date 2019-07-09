@@ -5,6 +5,7 @@ import android.content.DialogInterface.OnClickListener;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -28,6 +29,8 @@ public class MainActivity extends AppCompatActivity {
 
   private LiveData<Quote> randomQuote;
 
+
+
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -48,6 +51,10 @@ public class MainActivity extends AppCompatActivity {
           })
           .create()
           .show();
+    });
+    viewModel.searchQuote(null).observe((quotes) -> {
+      ArrayAdapter<Quote> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, quotes);
+      searchResult
     });
   }
 
